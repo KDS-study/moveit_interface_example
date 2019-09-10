@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="moveit_interface_example" name="moveit_interface_example" type="moveit_interface_example" output="screen"/>
+</launch>
