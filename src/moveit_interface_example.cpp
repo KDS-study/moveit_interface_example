@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 	MoveitPlanner moveitPlanner("arm");
 	while (true)
 	{
-		key = getche();
+		key = getch();
 		switch (key) {
 		case '1':
 			speed *= 0.1;
