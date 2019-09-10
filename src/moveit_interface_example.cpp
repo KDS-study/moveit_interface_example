@@ -26,11 +26,11 @@ int main(int argc, char** argv)
 	MoveitPlanner moveitPlanner("arm");
 	while (true)
 	{
-		key = getchar();
+		key = getche();
 		switch (key) {
 		case '1':
 			speed *= 0.1;
-			ROS_INFO("Speed * 0.1");
+			ROS_INFO("Speed * 0.2");
 			break;
 		case '2':
 			speed = 0.1;
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 			break;
 		case '3':
 			speed *= 10;
-			ROS_INFO("Speed * 10");
+			ROS_INFO("Speed * 5");
 			break;
 
 		case 'a':
@@ -142,19 +142,19 @@ int main(int argc, char** argv)
 			ROS_INFO("J5 lower");
 		}
 
-			if (J5 > 2.356194)
+		if (J5 > 2.356194)
 			{
 				J5 = 2.356194;
 				ROS_INFO("J5 upper");
 			}
 
-			if (J6 < -2.96706)
+		if (J6 < -2.96706)
 			{
 				J6 = -2.96706;
 				ROS_INFO("J6 lower");
 			}
 
-			if (J6 > 2.96706)
+		if (J6 > 2.96706)
 			{
 				J6 = 2.96706;
 				ROS_INFO("J6 upper");
