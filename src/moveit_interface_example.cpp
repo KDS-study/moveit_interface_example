@@ -1,7 +1,6 @@
 #include <ros/ros.h>
 #include <moveit_interface_example/MoveitPlanner.h>
 #include <stdio.h>  
-
 #include <ncurses.h>
 
 using namespace moveit::planning_interface;
