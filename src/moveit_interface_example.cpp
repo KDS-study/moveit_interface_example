@@ -1,53 +1,19 @@
 #include <ros/ros.h>
 #include <moveit_interface_example/MoveitPlanner.h>
 #include <stdio.h>  
-#include <term.h>  
-#include <termios.h>  
-#include <unistd.h>  
-  
-int getch(void)  
-{  
-  int ch;  
-  struct termios buf;  
-  struct termios save;  
-  
-   tcgetattr(0, &save);  
-   buf = save;  
-   buf.c_lflag &= ~(ICANON|ECHO);  
-   buf.c_cc[VMIN] = 1;  
-   buf.c_cc[VTIME] = 0;  
-   tcsetattr(0, TCSAFLUSH, &buf);  
-   ch = getchar();  
-   tcsetattr(0, TCSAFLUSH, &save);  
-   return ch;  
-}  
-  
-int main(void)  
-{  
-    int ch;  
-  
-    for(; !(ch=='\n');){  
-  
-        ch = getch();  
-        printf("%d \n", ch);  
-    }  
-  
-    return 0;  
-}  
 
+double J1 = -2.617994;
+double J2 = -1.047198;
+double J3 = 0.3141593;
+double J4 = -2.96706;
+double J5 = -1.658063;
+double J6 = -2.96706;
+double speed = 0.1;
 
-using namespace moveit::planning_interface;
+void lower_upper()
 
 int main(int argc, char** argv)
 {
-	double J1 = -2.617994;
-	double J2 = -1.047198;
-	double J3 = 0.3141593;
-	double J4 = -2.96706;
-	double J5 = -1.658063;
-	double J6 = -2.96706;
-	double speed = 0.1;
-
 	char key;
 
 	ros::init(argc, argv, "moveit_interface_example");
@@ -60,7 +26,7 @@ int main(int argc, char** argv)
 	MoveitPlanner moveitPlanner("arm");
 	while (true)
 	{
-		key = getch();
+		key = getchar();
 		switch (key) {
 		case '1':
 			speed *= 0.1;
@@ -77,44 +43,96 @@ int main(int argc, char** argv)
 
 		case 'a':
 			J1 += speed;
+
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+
 			break;
 		case 'z':
-			J1 -= speed;
+			J1 -= speed; 
+			
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+
 			break;
 
 		case 's':
 			J2 += speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'x':
 			J2 -= speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'd':
 			J3 += speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'c':
 			J3 -= speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'f':
 			J4 += speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'v':
 			J4 -= speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'g':
 			J5 += speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'b':
 			J5 -= speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'h':
 			J6 += speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'n':
 			J6 -= speed;
+			lower_upper();
+
+			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		default:
@@ -122,92 +140,95 @@ int main(int argc, char** argv)
 			continue;
 		}
 
-		if (J1 < -2.617994)
+		
+
+		if (moveResult == MoveItErrorCode::SUCCESS)
 		{
-			J1 = -2.617994;
-			ROS_INFO("J1 lower");
+			ROS_INFO("Succeeded to move cobotta");
 		}
-
-		if (J1 > 2.617994)
+		else
 		{
-			J1 = 2.617994;
-			ROS_INFO("J1 upper");
+			ROS_WARN_STREAM("Failed to move cobotta. error code: " << moveResult);
 		}
+	}
 
-		if (J2 < -1.047198)
-		{
-			J2 = -1.047198;
-			ROS_INFO("J2 lower");
-		}
+	ros::waitForShutdown();
+	return 0;
 
-		if (J2 > 1.743461)
-		{
-			J2 = 1.743461;
-			ROS_INFO("J2 upper");
-		}
+}
 
-		if (J3 < 0.3141593)
-		{
-			J3 = 0.3141593;
-			ROS_INFO("J3 lower");
-		}
 
-		if (J3 > 2.443461)
-		{
-			J3 = 2.443461;
-			ROS_INFO("J3 upper");
-		}
+void lower_upper() {
+	if (J1 < -2.617994)
+	{
+		J1 = -2.617994;
+		ROS_INFO("J1 lower");
+	}
 
-		if (J4 < -2.96706)
-		{
-			J4 = -2.96706;
-			ROS_INFO("J4 lower");
-		}
+	if (J1 > 2.617994)
+	{
+		J1 = 2.617994;
+		ROS_INFO("J1 upper");
+	}
 
-		if (J4 > 2.96706)
-		{
-			J4 = 2.96706;
-			ROS_INFO("J4 upper");
-		}
+	if (J2 < -1.047198)
+	{
+		J2 = -1.047198;
+		ROS_INFO("J2 lower");
+	}
 
-		if (J5 < -1.658063)
-		{
-			J5 = -1.658063;
-			ROS_INFO("J5 lower");
-		}
+	if (J2 > 1.743461)
+	{
+		J2 = 1.743461;
+		ROS_INFO("J2 upper");
+	}
 
-		if (J5 > 2.356194)
-			{
-				J5 = 2.356194;
-				ROS_INFO("J5 upper");
-			}
+	if (J3 < 0.3141593)
+	{
+		J3 = 0.3141593;
+		ROS_INFO("J3 lower");
+	}
 
-		if (J6 < -2.96706)
-			{
-				J6 = -2.96706;
-				ROS_INFO("J6 lower");
-			}
+	if (J3 > 2.443461)
+	{
+		J3 = 2.443461;
+		ROS_INFO("J3 upper");
+	}
 
-		if (J6 > 2.96706)
-			{
-				J6 = 2.96706;
-				ROS_INFO("J6 upper");
-			}
+	if (J4 < -2.96706)
+	{
+		J4 = -2.96706;
+		ROS_INFO("J4 lower");
+	}
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+	if (J4 > 2.96706)
+	{
+		J4 = 2.96706;
+		ROS_INFO("J4 upper");
+	}
 
-			if (moveResult == MoveItErrorCode::SUCCESS)
-			{
-				ROS_INFO("Succeeded to move cobotta");
-			}
-			else
-			{
-				ROS_WARN_STREAM("Failed to move cobotta. error code: " << moveResult);
-			}
-		}
+	if (J5 < -1.658063)
+	{
+		J5 = -1.658063;
+		ROS_INFO("J5 lower");
+	}
 
-		ros::waitForShutdown();
-		return 0;
-	
+	if (J5 > 2.356194)
+	{
+		J5 = 2.356194;
+		ROS_INFO("J5 upper");
+	}
+
+	if (J6 < -2.96706)
+	{
+		J6 = -2.96706;
+		ROS_INFO("J6 lower");
+	}
+
+	if (J6 > 2.96706)
+	{
+		J6 = 2.96706;
+		ROS_INFO("J6 upper");
+	}
+
 }
