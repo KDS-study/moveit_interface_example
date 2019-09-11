@@ -2,6 +2,8 @@
 #include <moveit_interface_example/MoveitPlanner.h>
 #include <stdio.h>  
 
+using namespace moveit::planning_interface;
+
 double J1 = -2.617994;
 double J2 = -1.047198;
 double J3 = 0.3141593;
@@ -26,6 +28,7 @@ int main(int argc, char** argv)
 	spinner.start();
 
 	MoveitPlanner moveitPlanner("arm");
+
 	while (true)
 	{
 		key = getchar();
