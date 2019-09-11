@@ -10,7 +10,7 @@ double J5 = -1.658063;
 double J6 = -2.96706;
 double speed = 0.1;
 
-void lower_upper()
+void lower_upper();
 
 int main(int argc, char** argv)
 {
