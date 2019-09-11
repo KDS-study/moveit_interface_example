@@ -14,9 +14,9 @@ double speed = 0.1;
 
 void lower_upper();
 
-void cobotta_move();
+int cobotta_move(int argc, char** argv);
 
-int main(int argc, char** argv)
+int main()
 {
 	char key;
 
@@ -192,7 +192,7 @@ void lower_upper() {
 
 }
 
-void cobotta_move() {
+int cobotta_move(int argc, char** argv) {
 	lower_upper();
 
 	ros::init(argc, argv, "moveit_interface_example");
@@ -215,4 +215,5 @@ void cobotta_move() {
 	{
 		ROS_WARN_STREAM("Failed to move cobotta. error code: " << moveResult);
 	}
+	return 0;
 }
