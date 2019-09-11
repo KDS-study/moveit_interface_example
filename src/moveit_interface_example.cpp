@@ -12,6 +12,8 @@ double speed = 0.1;
 
 void lower_upper();
 
+void cobotta_move();
+
 int main(int argc, char** argv)
 {
 	char key;
@@ -43,96 +45,66 @@ int main(int argc, char** argv)
 
 		case 'a':
 			J1 += speed;
-
-			lower_upper();
-
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+			cobotta_move();
 
 			break;
 		case 'z':
 			J1 -= speed; 
 			
-			lower_upper();
-
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
-
+			cobotta_move();
 			break;
 
 		case 's':
 			J2 += speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'x':
 			J2 -= speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'd':
 			J3 += speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'c':
 			J3 -= speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'f':
 			J4 += speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 		case 'v':
 			J4 -= speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'g':
 			J5 += speed;
-			lower_upper();
-
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+			cobotta_move();
 			break;
 		case 'b':
 			J5 -= speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		case 'h':
 			J6 += speed;
-			lower_upper();
-
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+			cobotta_move();
 			break;
 		case 'n':
 			J6 -= speed;
-			lower_upper();
+			cobotta_move();
 
-			const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-			const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 			break;
 
 		default:
@@ -142,14 +114,7 @@ int main(int argc, char** argv)
 
 		
 
-		if (moveResult == MoveItErrorCode::SUCCESS)
-		{
-			ROS_INFO("Succeeded to move cobotta");
-		}
-		else
-		{
-			ROS_WARN_STREAM("Failed to move cobotta. error code: " << moveResult);
-		}
+		
 	}
 
 	ros::waitForShutdown();
@@ -231,4 +196,20 @@ void lower_upper() {
 		ROS_INFO("J6 upper");
 	}
 
+}
+
+void cobotta_move() {
+	lower_upper();
+
+	const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
+	const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+
+	if (moveResult == MoveItErrorCode::SUCCESS)
+	{
+		ROS_INFO("Succeeded to move cobotta");
+	}
+	else
+	{
+		ROS_WARN_STREAM("Failed to move cobotta. error code: " << moveResult);
+	}
 }
