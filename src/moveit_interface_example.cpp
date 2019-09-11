@@ -2,6 +2,7 @@
 #include <moveit_interface_example/MoveitPlanner.h>
 #include <stdio.h>  
 #include <ncurses.h>
+#include <curses.h>
 
 using namespace moveit::planning_interface;
 
@@ -107,7 +108,6 @@ int main(int argc, char** argv)
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
 			continue;
 		}
-
 		
 
 		
