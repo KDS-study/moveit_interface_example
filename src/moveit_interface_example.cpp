@@ -2,6 +2,8 @@
 #include <moveit_interface_example/MoveitPlanner.h>
 #include <stdio.h>  
 
+#include <ncurses.h>
+
 using namespace moveit::planning_interface;
 
 double J1 = -2.617994;
@@ -22,7 +24,7 @@ int main(int argc, char** argv)
 
 	while (true)
 	{
-		key = getchar();
+		key = getch();
 		switch (key) {
 		case '1':
 			speed *= 0.1;
