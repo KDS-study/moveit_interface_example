@@ -39,65 +39,66 @@ int main()
 
 		case 'a':
 			J1 += speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 		case 'z':
 			J1 -= speed; 
 			
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 			break;
 
 		case 's':
 			J2 += speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 		case 'x':
 			J2 -= speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 
 		case 'd':
 			J3 += speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 		case 'c':
 			J3 -= speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 
 		case 'f':
 			J4 += speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 		case 'v':
 			J4 -= speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 
 		case 'g':
 			J5 += speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
+
 			break;
 		case 'b':
 			J5 -= speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 
 		case 'h':
 			J6 += speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 			break;
 		case 'n':
 			J6 -= speed;
-			cobotta_move();
+			cobotta_move(int argc, char** argv);
 
 			break;
 
