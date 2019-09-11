@@ -16,7 +16,7 @@ void lower_upper();
 
 int cobotta_move(int argc, char** argv);
 
-int main(int argc, char** arg)
+int main(int argc, char** argv)
 {
 	char key;
 
@@ -39,7 +39,7 @@ int main(int argc, char** arg)
 
 		case 'a':
 			J1 += speed;
-			cobotta_move(argc,  argv);
+			cobotta_move(argc, argv);
 
 			break;
 		case 'z':
