@@ -19,7 +19,7 @@ include_directories(
 )
 
 add_executable(moveit_interface_example
-  src/moveit_interface_example.cp
+  src/moveit_interface_example.cpp
 )
 
 add_dependencies(moveit_interface_example ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
