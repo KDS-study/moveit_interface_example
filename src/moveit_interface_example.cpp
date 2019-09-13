@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <moveit_interface_example/MoveitPlanner.h>
+#include <moveit/move_group_interface/move_group_interface.h>
 #include <stdio.h>  
 #include <termios.h>
 
@@ -237,6 +237,14 @@ void lower_upper() {
 
 }
 
+MoveItErrorCode moveByJointValues(MoveGroupInterface& moveGroup, const std::vector<double>& jointRadians) {
+	if (!moveGroup.setJointValueTarget(jointRadians))
+	{
+		return moveit::planning_interface::MoveItErrorCode(moveit_msgs::MoveItErrorCodes::INVALID_GOAL_CONSTRAINTS);
+	}
+	return moveGroup.move();
+}
+
 int cobotta_move(int argc, char** argv) {
 	lower_upper();
 
@@ -247,11 +255,11 @@ int cobotta_move(int argc, char** argv) {
 	ros::AsyncSpinner spinner(2);
 	spinner.start();
 
-	MoveitPlanner moveitPlanner("arm");
+	MoveGroupInterface moveGroupInterface("arm");
 
-	moveitPlanner.setMaxVelocityScalingFactor(1.0);
+	moveGroupInterface.setMaxVelocityScalingFactor(1.0);
 	const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
-	const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
+	const auto moveResult =moveByJointValues(moveGroupInterface, jointRadians);
 
 	if (moveResult == MoveItErrorCode::SUCCESS)
 	{
