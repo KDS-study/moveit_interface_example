@@ -17,6 +17,8 @@ void lower_upper();
 
 int cobotta_move(int argc, char** argv);
 
+void jointout();
+
 static struct termios old, current;
 
 /* Initialize new terminal i/o settings */
@@ -86,11 +88,9 @@ int main(int argc, char** argv)
 		case 'a':
 			J1 += speed;
 			cobotta_move(argc, argv);
-
 			break;
 		case 'z':
 			J1 -= speed; 
-			
 			cobotta_move(argc, argv);
 			break;
 
@@ -152,7 +152,7 @@ int main(int argc, char** argv)
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
 			continue;
 		}
-		
+		jointout();
 
 		
 	}
@@ -160,6 +160,15 @@ int main(int argc, char** argv)
 	ros::waitForShutdown();
 	return 0;
 
+}
+
+void jointout() {
+	cout << "J1" << J1;
+	cout << "J2" << J2;
+	cout << "J3" << J3;
+	cout << "J4" << J4;
+	cout << "J5" << J5;
+	cout << "J6" << J6 <<endl;
 }
 
 void lower_upper() {
