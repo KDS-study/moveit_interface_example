@@ -246,9 +246,10 @@ int cobotta_move(int argc, char** argv) {
 	//moveitの動作計画を使用するために必要
 	ros::AsyncSpinner spinner(2);
 	spinner.start();
-	setMaxVelocityScalingFactor(1.0);
+
 	MoveitPlanner moveitPlanner("arm");
 
+	moveitPlanner.setMaxVelocityScalingFactor(1.0);
 	const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
 	const auto moveResult = moveitPlanner.moveByJointValues(jointRadians);
 
