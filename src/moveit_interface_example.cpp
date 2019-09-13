@@ -163,12 +163,12 @@ int main(int argc, char** argv)
 }
 
 void jointout() {
-	cout << "J1" << J1;
-	cout << "J2" << J2;
-	cout << "J3" << J3;
-	cout << "J4" << J4;
-	cout << "J5" << J5;
-	cout << "J6" << J6 <<endl;
+	std::cout << "J1" << J1;
+	std::cout << "J2" << J2;
+	std::cout << "J3" << J3;
+	std::cout << "J4" << J4;
+	std::cout << "J5" << J5;
+	std::cout << "J6" << J6 << std::endl;
 }
 
 void lower_upper() {
