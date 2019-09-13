@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <moveit_interface_example/MoveitPlanner.h>
 #include <stdio.h>  
+#include <termios.h>
 
 using namespace moveit::planning_interface;
 
@@ -15,10 +16,6 @@ double speed = 0.1;
 void lower_upper();
 
 int cobotta_move(int argc, char** argv);
-
-
-
-#include <termios.h>
 
 static struct termios old, current;
 
@@ -64,9 +61,6 @@ char getche(void)
 {
 	return getch_(1);
 }
-
-
-
 
 int main(int argc, char** argv)
 {
@@ -168,7 +162,6 @@ int main(int argc, char** argv)
 
 }
 
-
 void lower_upper() {
 	if (J1 < -2.617994)
 	{
@@ -253,7 +246,7 @@ int cobotta_move(int argc, char** argv) {
 	//moveitの動作計画を使用するために必要
 	ros::AsyncSpinner spinner(2);
 	spinner.start();
-
+	setMaxVelocityScalingFactor(1.0);
 	MoveitPlanner moveitPlanner("arm");
 
 	const std::vector<double> jointRadians = { J1,J2,J3,J4,J5,J6 };
