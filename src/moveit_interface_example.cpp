@@ -152,8 +152,8 @@ int main(int argc, char** argv)
 			J1 = 0;
 			J2 = 0;
 			J4 = 0;
-			J0 = 0;
-			J0 = 0;
+			J5 = 0;
+			J6 = 0;
 			cobotta_move(argc, argv);
 
 		default:
