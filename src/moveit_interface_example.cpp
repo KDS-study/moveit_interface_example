@@ -148,6 +148,14 @@ int main(int argc, char** argv)
 
 			break;
 
+		case 'q':
+			J1 = 0;
+			J2 = 0;
+			J4 = 0;
+			J0 = 0;
+			J0 = 0;
+			cobotta_move(argc, argv);
+
 		default:
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
 			continue;
