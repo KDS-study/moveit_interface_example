@@ -149,12 +149,12 @@ int main(int argc, char** argv)
 			break;
 
 		case 'q':
-			J1 = -2.617994;
-			J2 = -1.047198;
+			J1 = 0;
+			J2 = 0;
 			J3 = 1.5708;
-			J4 = -2.96706;
-			J5 = -1.658063;
-			J6 = -2.96706;
+			J4 = 0;
+			J5 = 0;
+			J6 = 0;
 			speed = 0.1;
 			cobotta_move(argc, argv);
 			break;
