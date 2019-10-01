@@ -7,7 +7,7 @@ using namespace moveit::planning_interface;
 
 double J1 = -2.617994;
 double J2 = -1.047198;
-double J3 = 0.3141593;
+double J3 = 1.5708;
 double J4 = -2.96706;
 double J5 = -1.658063;
 double J6 = -2.96706;
@@ -149,12 +149,15 @@ int main(int argc, char** argv)
 			break;
 
 		case 'q':
-			J1 = 0;
-			J2 = 0;
-			J4 = 0;
-			J5 = 0;
-			J6 = 0;
+			J1 = -2.617994;
+			J2 = -1.047198;
+			J3 = 1.5708;
+			J4 = -2.96706;
+			J5 = -1.658063;
+			J6 = -2.96706;
+			speed = 0.1;
 			cobotta_move(argc, argv);
+			break;
 
 		default:
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
@@ -171,12 +174,12 @@ int main(int argc, char** argv)
 }
 
 void jointout() {
-	std::cout << "J1" << J1;
-	std::cout << "J2" << J2;
-	std::cout << "J3" << J3;
-	std::cout << "J4" << J4;
-	std::cout << "J5" << J5;
-	std::cout << "J6" << J6 << std::endl;
+	std::cout << "J1:" << J1 << std::endl;
+	std::cout << "J2:" << J2 << std::endl;
+	std::cout << "J3:" << J3 << std::endl;
+	std::cout << "J4:" << J4 << std::endl;
+	std::cout << "J5:" << J5 << std::endl;
+	std::cout << "J6:" << J6 << std::endl;
 }
 
 void lower_upper() {
