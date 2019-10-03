@@ -3,6 +3,8 @@
 #include <stdio.h>  
 #include <termios.h>
 
+#define PI 3.14159265
+
 using namespace moveit::planning_interface;
 
 double J1 = -2.617994;
@@ -11,7 +13,7 @@ double J3 = 1.5708;
 double J4 = -2.96706;
 double J5 = -1.658063;
 double J6 = -2.96706;
-double speed = 0.1;
+double speed = 0.0872665;
 
 void lower_upper();
 
@@ -174,12 +176,17 @@ int main(int argc, char** argv)
 }
 
 void jointout() {
-	std::cout << "J1:" << J1 << std::endl;
-	std::cout << "J2:" << J2 << std::endl;
-	std::cout << "J3:" << J3 << std::endl;
-	std::cout << "J4:" << J4 << std::endl;
-	std::cout << "J5:" << J5 << std::endl;
-	std::cout << "J6:" << J6 << std::endl;
+	std::cout << "J1:" << rad2deg(J1) << "deg" << std::endl;
+	std::cout << "J2:" << rad2deg(J2) << "deg" << std::endl;
+	std::cout << "J3:" << rad2deg(J3) << "deg" << std::endl;
+	std::cout << "J4:" << rad2deg(J4) << "deg" << std::endl;
+	std::cout << "J5:" << rad2deg(J5) << "deg" << std::endl;
+	std::cout << "J6:" << rad2deg(J6) << "deg" << std::endl;
+}
+
+double rad2deg(double radian)
+{
+	return radian * 180 / PI;
 }
 
 void lower_upper() {
