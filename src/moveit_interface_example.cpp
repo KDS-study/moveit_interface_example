@@ -66,6 +66,11 @@ char getche(void)
 	return getch_(1);
 }
 
+double rad2deg(double radian)
+{
+	return radian * 180 / PI;
+}
+
 int main(int argc, char** argv)
 {
 	char key;
@@ -184,10 +189,7 @@ void jointout() {
 	std::cout << "J6:" << rad2deg(J6) << "deg" << std::endl;
 }
 
-double rad2deg(double radian)
-{
-	return radian * 180 / PI;
-}
+
 
 void lower_upper() {
 	if (J1 < -2.617994)
