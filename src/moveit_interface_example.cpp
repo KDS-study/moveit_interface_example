@@ -3,6 +3,12 @@
 #include <stdio.h>  
 #include <termios.h>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+using namespace std;
+
 #define PI 3.14159265
 
 using namespace moveit::planning_interface;
@@ -71,13 +77,29 @@ double rad2deg(double radian)
 	return radian * 180 / PI;
 }
 
+void error(char* msg)
+{
+	perror(msg);
+	exit(0);
+}
+
 int main(int argc, char** argv)
 {
+	int sock0;
+	struct sockaddr_in addr;
+	struct sockaddr_in client;
+	int len;
+	int sock;
+
+	
+
 	char key;
 
 	while (true)
 	{
-		key = getche();
+
+		 key = getche();
+			   
 		switch (key) {
 		case '1':
 			speed *= 0.1;
@@ -166,14 +188,52 @@ int main(int argc, char** argv)
 			cobotta_move(argc, argv);
 			break;
 
+		case '0':
+			break;
+
 		default:
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
 			continue;
 		}
 		jointout();
+	
+		char JJ[256] = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
 
-		
+
+		/* ソケットの作成 */
+		sock0 = socket(AF_INET, SOCK_STREAM, 0);
+
+		/* ソケットの設定 */
+		addr.sin_family = AF_INET;
+		addr.sin_port = htons(12345);
+		addr.sin_addr.s_addr = INADDR_ANY;
+		bind(sock0, (struct sockaddr*)& addr, sizeof(addr));
+
+		/* TCPクライアントからの接続要求を待てる状態にする */
+		listen(sock0, 5);
+
+		/* TCPクライアントからの接続要求を受け付ける */
+		len = sizeof(client);
+		sock = accept(sock0, (struct sockaddr*) & client, &len);
+
+		/* 送信 */
+		write(sock, JJ, sizeof(JJ));
+
+		/* TCPセッションの終了 */
+		close(sock);
+
+		/* listen するsocketの終了 */
+		close(sock0);
+
+		key = "0";
+
 	}
+
+
+	
+
+	
+
 
 	ros::waitForShutdown();
 	return 0;
