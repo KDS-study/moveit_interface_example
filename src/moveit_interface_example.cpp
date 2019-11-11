@@ -2,6 +2,8 @@
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <stdio.h>  
 #include <termios.h>
+#include <string.h>
+
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -91,7 +93,18 @@ int main(int argc, char** argv)
 	int len;
 	int sock;
 
-	
+	/* ソケットの作成 */
+	sock0 = socket(AF_INET, SOCK_STREAM, 0);
+
+	/* ソケットの設定 */
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(12345);
+	addr.sin_addr.s_addr = INADDR_ANY;
+
+	bind(sock0, (struct sockaddr*) & addr, sizeof(addr));
+
+	/* TCPクライアントからの接続要求を待てる状態にする */
+	listen(sock0, 5);
 
 	char key;
 
@@ -197,24 +210,21 @@ int main(int argc, char** argv)
 		}
 		jointout();
 	
-		char JJ[256] = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
+		
+		char JJ[] ="";
+		strcat(JJ, to_string(J1));
+		strcat(JJ, to_string(J2));
+		strcat(JJ, to_string(J3));
+		strcat(JJ, to_string(J4));
+		strcat(JJ, to_string(J5));
+		strcat(JJ, to_string(J6));
+		
 
-
-		/* ソケットの作成 */
-		sock0 = socket(AF_INET, SOCK_STREAM, 0);
-
-		/* ソケットの設定 */
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(12345);
-		addr.sin_addr.s_addr = INADDR_ANY;
-		bind(sock0, (struct sockaddr*)& addr, sizeof(addr));
-
-		/* TCPクライアントからの接続要求を待てる状態にする */
-		listen(sock0, 5);
+		
 
 		/* TCPクライアントからの接続要求を受け付ける */
 		len = sizeof(client);
-		sock = accept(sock0, (struct sockaddr*) & client, &len);
+		sock = accept(sock0, (struct sockaddr *)&client, &len);
 
 		/* 送信 */
 		write(sock, JJ, sizeof(JJ));
@@ -222,16 +232,13 @@ int main(int argc, char** argv)
 		/* TCPセッションの終了 */
 		close(sock);
 
-		/* listen するsocketの終了 */
-		close(sock0);
-
-		key = "0";
 
 	}
 
 
 	
-
+	/* listen するsocketの終了 */
+	close(sock0);
 	
 
 
