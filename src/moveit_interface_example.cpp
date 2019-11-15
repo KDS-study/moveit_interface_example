@@ -211,18 +211,7 @@ int main(int argc, char** argv)
 		jointout();
 	
 		
-		char JJ[] ="";
-		strcat(JJ, to_string(J1));
-		strcat(JJ, "J");
-		strcat(JJ, to_string(J2));
-		strcat(JJ, "J");
-		strcat(JJ, to_string(J3));
-		strcat(JJ, "J");
-		strcat(JJ, to_string(J4));
-		strcat(JJ, "J");
-		strcat(JJ, to_string(J5));
-		strcat(JJ, "J");
-		strcat(JJ, to_string(J6));
+		string JJ = "J" + J1.str();
 		
 
 		
