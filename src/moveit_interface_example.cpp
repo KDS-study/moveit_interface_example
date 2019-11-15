@@ -205,6 +205,12 @@ int main(int argc, char** argv)
 		/* ソケットの作成 */
 		sock0 = socket(AF_INET, SOCK_STREAM, 0);
 
+
+		if (sock < 0) {
+			perror("ERROR opening socket");
+			exit(1);
+		}
+
 		/* ソケットの設定 */
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons(12345);
@@ -218,10 +224,10 @@ int main(int argc, char** argv)
 
 		/* TCPクライアントからの接続要求を受け付ける */
 		len = sizeof(client);
-		sock = accept(sock0, (struct sockaddr *) &client, &len);
+		sock = accept(sock0, (struct sockaddr *) &client, (socklen_t*)&len);
 
 		/* 送信 */
-		write(sock, JJ, sizeof(JJ),0);
+		send(sock, JJ, sizeof(JJ),0);
 
 		/* TCPセッションの終了 */
 		close(sock);
