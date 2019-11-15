@@ -227,7 +227,7 @@ int main(int argc, char** argv)
 		sock = accept(sock0, (struct sockaddr *) &client, (socklen_t*)&len);
 
 		/* 送信 */
-		send(sock, JJ, sizeof(JJ),0);
+		sendto(sock, JJ, sizeof(JJ),0, (struct sockaddr*)& addr, sizeof(addr));
 
 		/* TCPセッションの終了 */
 		close(sock);
