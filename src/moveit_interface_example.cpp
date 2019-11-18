@@ -31,6 +31,7 @@ void jointout();
 
 static struct termios old, current;
 
+void sendJinfo();
 /* Initialize new terminal i/o settings */
 void initTermios(int echo)
 {
@@ -87,18 +88,13 @@ void error(char* msg)
 
 int main(int argc, char** argv)
 {
-	struct sockaddr_in addr;
-	struct sockaddr_in client;
-	int len;
-	int sock;
-
 	char key;
 
 	while (true)
 	{
 
-		 key = getche();
-			   
+		key = getche();
+
 		switch (key) {
 		case '1':
 			speed *= 0.1;
@@ -118,7 +114,7 @@ int main(int argc, char** argv)
 			cobotta_move(argc, argv);
 			break;
 		case 'z':
-			J1 -= speed; 
+			J1 -= speed;
 			cobotta_move(argc, argv);
 			break;
 
@@ -194,12 +190,31 @@ int main(int argc, char** argv)
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
 			continue;
 		}
-		jointout();
+		jointout()
+		sendJinfo();
+	}		
+
 	
-		
+	
+
+
+	ros::waitForShutdown();
+	return 0;
+
+}
+
+void sendJinfo() {
+
+	struct sockaddr_in addr;
+	struct sockaddr_in client;
+	int len;
+	int sock;
+
+	int i;
+	
 		string Jinfo = "J" + to_string(J1);
-		
-		int i;
+
+
 		char JJ[Jinfo.length()];
 
 		for (i = 0; i < sizeof(JJ); i++) {
@@ -208,7 +223,6 @@ int main(int argc, char** argv)
 
 		/* ソケットの作成 */
 		sock = socket(AF_INET, SOCK_STREAM, 0);
-
 
 		if (sock < 0) {
 			perror("ERROR opening socket");
@@ -220,30 +234,22 @@ int main(int argc, char** argv)
 		addr.sin_port = htons(12345);
 		addr.sin_addr.s_addr = INADDR_ANY;
 
-		bind(sock, (struct sockaddr*) &addr, sizeof(addr));
+		bind(sock, (struct sockaddr*) & addr, sizeof(addr));
 
 		/* TCPクライアントからの接続要求を待てる状態にする */
 		listen(sock, 5);
-		
+
 
 		/* TCPクライアントからの接続要求を受け付ける */
 		len = sizeof(client);
-		sock = accept(sock, (struct sockaddr *) &client, (socklen_t*)&len);
+		sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
 
 		/* 送信 */
-		write(sock, JJ,strlen(JJ));
+		write(sock, JJ, strlen(JJ));
 
 		/* TCPセッションの終了 */
 		close(sock);
-
-
-	}
 	
-
-
-	ros::waitForShutdown();
-	return 0;
-
 }
 
 void jointout() {
