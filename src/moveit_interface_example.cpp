@@ -32,6 +32,8 @@ void jointout();
 static struct termios old, current;
 
 void sendJinfo();
+
+void TCPconection();
 /* Initialize new terminal i/o settings */
 void initTermios(int echo)
 {
@@ -89,6 +91,8 @@ void error(char* msg)
 int main(int argc, char** argv)
 {
 	char key;
+
+	TCPconection();
 
 	while (true)
 	{
@@ -190,7 +194,7 @@ int main(int argc, char** argv)
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
 			continue;
 		}
-		jointout()
+		jointout();
 		sendJinfo();
 	}		
 
@@ -204,6 +208,11 @@ int main(int argc, char** argv)
 }
 
 void sendJinfo() {
+	/* 送信 */
+	write(sock, JJ, strlen(JJ));
+}
+
+void TCPconection() {
 
 	struct sockaddr_in addr;
 	struct sockaddr_in client;
@@ -244,11 +253,12 @@ void sendJinfo() {
 		len = sizeof(client);
 		sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
 
-		/* 送信 */
+		/* 送信 
 		write(sock, JJ, strlen(JJ));
+		*/
 
-		/* TCPセッションの終了 */
-		close(sock);
+		/* TCPセッションの終了 
+		close(sock);*/
 	
 }
 
