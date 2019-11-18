@@ -197,8 +197,15 @@ int main(int argc, char** argv)
 		jointout();
 	
 		
-		char JJ[512] = "J" + to_string(J1);
+		string Jinfo = "J" + to_string(J1);
 		
+		int i;
+		char JJ[Jinfo.length()];
+
+		for (i = 0; i < sizeof(JJ); i++) {
+			JJ[i] = Jinfo[i];
+		}
+
 		/* ソケットの作成 */
 		sock = socket(AF_INET, SOCK_STREAM, 0);
 
