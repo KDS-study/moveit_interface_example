@@ -31,9 +31,7 @@ void jointout();
 
 static struct termios old, current;
 
-void sendJinfo();
 
-void TCPconection();
 /* Initialize new terminal i/o settings */
 void initTermios(int echo)
 {
@@ -92,10 +90,56 @@ int main(int argc, char** argv)
 {
 	char key;
 
-	TCPconection();
+	struct sockaddr_in addr;
+	struct sockaddr_in client;
+	int len;
+	int sock;
+
+	int i;
+
+	string Jinfo = "J" + to_string(J1);
+
+
+	char JJ[Jinfo.length()];
+
+	for (i = 0; i < sizeof(JJ); i++) {
+		JJ[i] = Jinfo[i];
+	}
+
+	/* ソケットの作成 */
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+
+	if (sock < 0) {
+		perror("ERROR opening socket");
+		exit(1);
+	}
+
+	/* ソケットの設定 */
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(12345);
+	addr.sin_addr.s_addr = INADDR_ANY;
+
+	bind(sock, (struct sockaddr*) & addr, sizeof(addr));
+
+	/* TCPクライアントからの接続要求を待てる状態にする */
+	listen(sock, 5);
+
+
+	/* TCPクライアントからの接続要求を受け付ける */
+	len = sizeof(client);
+	sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
+
+	/* 送信
+		write(sock, JJ, strlen(JJ));
+		*/
+
+		/* TCPセッションの終了
+		close(sock);*/
 
 	while (true)
 	{
+		
+
 
 		key = getche();
 
@@ -195,7 +239,7 @@ int main(int argc, char** argv)
 			continue;
 		}
 		jointout();
-		sendJinfo();
+		write(sock, JJ, strlen(JJ));
 	}		
 
 	
@@ -205,61 +249,6 @@ int main(int argc, char** argv)
 	ros::waitForShutdown();
 	return 0;
 
-}
-
-void sendJinfo() {
-	/* 送信 */
-	write(sock, JJ, strlen(JJ));
-}
-
-void TCPconection() {
-
-	struct sockaddr_in addr;
-	struct sockaddr_in client;
-	int len;
-	int sock;
-
-	int i;
-	
-		string Jinfo = "J" + to_string(J1);
-
-
-		char JJ[Jinfo.length()];
-
-		for (i = 0; i < sizeof(JJ); i++) {
-			JJ[i] = Jinfo[i];
-		}
-
-		/* ソケットの作成 */
-		sock = socket(AF_INET, SOCK_STREAM, 0);
-
-		if (sock < 0) {
-			perror("ERROR opening socket");
-			exit(1);
-		}
-
-		/* ソケットの設定 */
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(12345);
-		addr.sin_addr.s_addr = INADDR_ANY;
-
-		bind(sock, (struct sockaddr*) & addr, sizeof(addr));
-
-		/* TCPクライアントからの接続要求を待てる状態にする */
-		listen(sock, 5);
-
-
-		/* TCPクライアントからの接続要求を受け付ける */
-		len = sizeof(client);
-		sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
-
-		/* 送信 
-		write(sock, JJ, strlen(JJ));
-		*/
-
-		/* TCPセッションの終了 
-		close(sock);*/
-	
 }
 
 void jointout() {
