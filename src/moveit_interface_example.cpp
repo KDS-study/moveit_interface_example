@@ -92,8 +92,6 @@ int main(int argc, char** argv)
 	int len;
 	int sock;
 
-	
-
 	char key;
 
 	while (true)
@@ -199,7 +197,7 @@ int main(int argc, char** argv)
 		jointout();
 	
 		
-		string JJ = "J" + to_string(J1);
+		char JJ[512] = "J" + to_string(J1);
 		
 		/* ソケットの作成 */
 		sock = socket(AF_INET, SOCK_STREAM, 0);
