@@ -17,12 +17,12 @@ using std::thread;
 
 #define PI 3.14159265
 
-void lower_upper();
+void lower_upper(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
 
-int cobotta_move(int argc, char** argv, int* j1p, int* j2p, int* j3p, int* j4p, int* j5p, int* j6p);
+int cobotta_move(int argc, char** argv, int* j1p, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
 
-void jointout();
-void TcpThread1(int* j1p, int* j2p, int* j3p, int* j4p, int* j5p, int* j6p);
+void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
+void TcpThread1(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
 
 static struct termios old, current;
 
@@ -84,21 +84,14 @@ void error(char* msg)
 int main(int argc, char** argv)
 {
 	char *key;
-
-	double J1 = -2.617994;
-	double J2 = -1.047198;
-	double J3 = 1.5708;
-	double J4 = -2.96706;
-	double J5 = -1.658063;
-	double J6 = -2.96706;
 	double speed = 0.0872665;
 
-	int* j1p = J1;
-	int* j2p = J2;
-	int* j3p = J3;
-	int* j4p = J4;
-	int* j5p = J5;
-	int* j6p = J6;
+	double *j1p = -2.617994;
+	double *j2p = -1.047198;
+	double *j3p = 1.5708;
+	double *j4p = -2.96706;
+	double *j5p = -1.658063;
+	double*j6p = -2.96706;
 
 	thread th1(TcpThread1, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
@@ -121,94 +114,77 @@ int main(int argc, char** argv)
 			break;
 
 		case 'a':
-			J1 += speed;
-			*j1p = J1;
+			*j1p += speed;
 			cobotta_move(argc, argv,*j1p,*j2p,*j3p,*j4p,*j5p,*j6p);
 			break;
+
 		case 'z':
-			J1 -= speed;
-			*j1p = J1;
+			*j1p -= speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 			break;
 
 		case 's':
-			J2 += speed;
-			*j2p = J2;
+			*j2p += speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
 		case 'x':
-			J2 -= speed;
-			*j2p = J2;
+			*j2p -= speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
 
 		case 'd':
-			J3 += speed;
-			*j3p = J3;
+			*j3p += speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
 		case 'c':
-			J3 -= speed;
-			*j3p = J3;
+			*j3p -= speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
 
 		case 'f':
-			J4 += speed;
-			*j4p = J4;
+			*j4p += speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 			break;
 
 		case 'v':
-			J4 -= speed;	
-			*j4p = J4;
+			*j4p -= speed;	
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 			break;
 
 		case 'g':
-			J5 += speed;
-			*j5p = J5;
+			*j5p += speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 			break;
 
 		case 'b':
-			J5 -= speed;
-			*j5p = J5;
+			*j5p -= speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
 
 		case 'h':
-			J6 += speed;
-			*j6p = J6;
+			*j6 += speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 			break;
 
 		case 'n':
-			J6 -= speed;
-			*j6p = J6;
+			*j6 -= speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
 
 		case 'q':
-			J1 = 0;
-			J2 = 0;
-			J3 = 1.5708;
-			J4 = 0;
-			J5 = 0;
-			J6 = 0;
+			*j1p = 0;
+			*j2p = 0;
+			*j3p = 1.5708;
+			*j4p = 0;
+			*j5p = 0;
+			*j6 = 0;
 
-			*j1p = J1;
-			*j2p = J2;
-			*j3p = J3;
-			*j4p = J4;
-			*j5p = J5;
-			*j6p = J6;
 
 			speed = 0.1;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
@@ -221,7 +197,7 @@ int main(int argc, char** argv)
 			ROS_INFO("Push 1,2,3 azsxdcfvgbhn q");
 			continue;
 		}
-		jointout();
+		jointout(*j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 		
 	}		
@@ -232,9 +208,10 @@ int main(int argc, char** argv)
 
 }
 
-void TcpThread1(int *j1p, int* j2p, int* j3p, int* j4p, int* j5p, int* j6p ) {
+void TcpThread1(double *j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p ) {
 	struct sockaddr_in addr;
 	struct sockaddr_in client;
+
 	int len;
 	int sock;
 
@@ -285,87 +262,87 @@ void stringtochar(string *Jinfo, char JJ[]) {
 	
 }
 
-void jointout() {
-	std::cout << "J1:" << rad2deg(J1) << "deg" << std::endl;
-	std::cout << "J2:" << rad2deg(J2) << "deg" << std::endl;
-	std::cout << "J3:" << rad2deg(J3) << "deg" << std::endl;
-	std::cout << "J4:" << rad2deg(J4) << "deg" << std::endl;
-	std::cout << "J5:" << rad2deg(J5) << "deg" << std::endl;
-	std::cout << "J6:" << rad2deg(J6) << "deg" << std::endl;
+void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
+	std::cout << "J1:" << rad2deg(*j1p) << "deg" << std::endl;
+	std::cout << "J2:" << rad2deg(*j2p) << "deg" << std::endl;
+	std::cout << "J3:" << rad2deg(*j3p) << "deg" << std::endl;
+	std::cout << "J4:" << rad2deg(*j4p) << "deg" << std::endl;
+	std::cout << "J5:" << rad2deg(*j5p) << "deg" << std::endl;
+	std::cout << "J6:" << rad2deg(*j6) << "deg" << std::endl;
 }
 
 
 
-void lower_upper() {
-	if (J1 < -2.617994)
+void lower_upper(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
+	if (*j1p < -2.617994)
 	{
-		J1 = -2.617994;
+		*j1p = -2.617994;
 		ROS_INFO("J1 lower");
 	}
 
-	if (J1 > 2.617994)
+	if (*j1p > 2.617994)
 	{
-		J1 = 2.617994;
+		*j1p = 2.617994;
 		ROS_INFO("J1 upper");
 	}
 
-	if (J2 < -1.047198)
+	if (*j2p < -1.047198)
 	{
-		J2 = -1.047198;
+		*j2p = -1.047198;
 		ROS_INFO("J2 lower");
 	}
 
-	if (J2 > 1.743461)
+	if (*j2p > 1.743461)
 	{
-		J2 = 1.743461;
+		*j2p = 1.743461;
 		ROS_INFO("J2 upper");
 	}
 
-	if (J3 < 0.3141593)
+	if (*j3p < 0.3141593)
 	{
-		J3 = 0.3141593;
+		*j3p = 0.3141593;
 		ROS_INFO("J3 lower");
 	}
 
-	if (J3 > 2.443461)
+	if (*j3p > 2.443461)
 	{
-		J3 = 2.443461;
+		*j3p = 2.443461;
 		ROS_INFO("J3 upper");
 	}
 
-	if (J4 < -2.96706)
+	if (*j4p < -2.96706)
 	{
-		J4 = -2.96706;
+		*j4p = -2.96706;
 		ROS_INFO("J4 lower");
 	}
 
-	if (J4 > 2.96706)
+	if (*j4p > 2.96706)
 	{
-		J4 = 2.96706;
+		*j4p = 2.96706;
 		ROS_INFO("J4 upper");
 	}
 
-	if (J5 < -1.658063)
+	if (*j5p < -1.658063)
 	{
-		J5 = -1.658063;
+		*j5p = -1.658063;
 		ROS_INFO("J5 lower");
 	}
 
-	if (J5 > 2.356194)
+	if (*j5p > 2.356194)
 	{
-		J5 = 2.356194;
+		*j5p = 2.356194;
 		ROS_INFO("J5 upper");
 	}
 
-	if (J6 < -2.96706)
+	if (*j6 < -2.96706)
 	{
-		J6 = -2.96706;
+		*j6 = -2.96706;
 		ROS_INFO("J6 lower");
 	}
 
-	if (J6 > 2.96706)
+	if (*j6 > 2.96706)
 	{
-		J6 = 2.96706;
+		*j6 = 2.96706;
 		ROS_INFO("J6 upper");
 	}
 
@@ -379,7 +356,7 @@ MoveItErrorCode moveByJointValues(MoveGroupInterface& moveGroup, const std::vect
 	return moveGroup.move();
 }
 
-int cobotta_move(int argc, char** argv,int *j1p,int *j2p,int *j3p,int *j4p,int *j5p,int *j6p) {
+int cobotta_move(int argc, char** argv, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
 	lower_upper();
 
 	ros::init(argc, argv, "moveit_interface_example");
