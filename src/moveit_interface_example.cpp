@@ -204,7 +204,7 @@ int main(int argc, char** argv)
 
 }
 
-void TcpThread1(string* Jinfo) {
+void TcpThread1() {
 	struct sockaddr_in addr;
 	struct sockaddr_in client;
 	int len;
