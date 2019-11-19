@@ -84,14 +84,21 @@ void error(char* msg)
 int main(int argc, char** argv)
 {
 	char *key;
+
+	double J1 = -2.617994;
+	double J2 = -1.047198;
+	double J3 = 1.5708;
+	double J4 = -2.96706;
+	double J5 = -1.658063;
+	double J6 = -2.96706;
 	double speed = 0.0872665;
 
-	double *j1p = -2.617994;
-	double *j2p = -1.047198;
-	double *j3p = 1.5708;
-	double *j4p = -2.96706;
-	double *j5p = -1.658063;
-	double*j6p = -2.96706;
+	double *j1p = &J1;
+	double *j2p = &J2;
+	double *j3p = &J3;
+	double *j4p = &J4;
+	double *j5p = &J5;
+	double*j6p =  &J6;
 
 	thread th1(TcpThread1, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
