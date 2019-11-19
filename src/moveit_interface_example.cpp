@@ -9,11 +9,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include<thread>
+
 using namespace std;
+using namespace moveit::planning_interface;
+using std::thread;
 
 #define PI 3.14159265
-
-using namespace moveit::planning_interface;
 
 double J1 = -2.617994;
 double J2 = -1.047198;
@@ -28,6 +30,7 @@ void lower_upper();
 int cobotta_move(int argc, char** argv);
 
 void jointout();
+void TcpThread1(string* Jinfo);
 
 static struct termios old, current;
 
@@ -88,62 +91,21 @@ void error(char* msg)
 
 int main(int argc, char** argv)
 {
-	char key;
-
-	struct sockaddr_in addr;
-	struct sockaddr_in client;
-	int len;
-	int sock;
+	char *key;
 
 	int i;
 
-	string Jinfo = "J" + to_string(J1);
+	string *Jinfo;
+	
+	*Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6); 
 
-
-	char JJ[Jinfo.length()];
-
-	for (i = 0; i < sizeof(JJ); i++) {
-		JJ[i] = Jinfo[i];
-	}
-
-	/* ソケットの作成 */
-	sock = socket(AF_INET, SOCK_STREAM, 0);
-
-	if (sock < 0) {
-		perror("ERROR opening socket");
-		exit(1);
-	}
-
-	/* ソケットの設定 */
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(12345);
-	addr.sin_addr.s_addr = INADDR_ANY;
-
-	bind(sock, (struct sockaddr*) & addr, sizeof(addr));
-
-	/* TCPクライアントからの接続要求を待てる状態にする */
-	listen(sock, 5);
-
-
-	/* TCPクライアントからの接続要求を受け付ける */
-	len = sizeof(client);
-	sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
-
-	/* 送信
-		write(sock, JJ, strlen(JJ));
-		*/
-
-		/* TCPセッションの終了
-		close(sock);*/
+	thread th1(TcpThread1,*Jinfo);
 
 	while (true)
 	{
-		
+		*key = getche();
 
-
-		key = getche();
-
-		switch (key) {
+		switch (*key) {
 		case '1':
 			speed *= 0.1;
 			ROS_INFO("Speed * 0.2");
@@ -239,16 +201,63 @@ int main(int argc, char** argv)
 			continue;
 		}
 		jointout();
-		write(sock, JJ, strlen(JJ));
+
+		*Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
+		
 	}		
 
-	
-	
-
-
 	ros::waitForShutdown();
+	th1.join();
 	return 0;
 
+}
+
+void TcpThread1(string *Jinfo) {
+	struct sockaddr_in addr;
+	struct sockaddr_in client;
+	int len;
+	int sock;
+
+	/* ソケットの作成 */
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+
+	if (sock < 0) {
+		perror("ERROR opening socket");
+		exit(1);
+	}
+
+	/* ソケットの設定 */
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(12345);
+	addr.sin_addr.s_addr = INADDR_ANY;
+
+	bind(sock, (struct sockaddr*) & addr, sizeof(addr));
+
+	/* TCPクライアントからの接続要求を待てる状態にする */
+	listen(sock, 5);
+
+
+	/* TCPクライアントからの接続要求を受け付ける */
+	len = sizeof(client);
+	sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
+
+	while (true) {
+		char JJ[*Jinfo.length()];
+		for (i = 0; i < sizeof(JJ); i++) {
+			JJ[i] = *Jinfo[i];
+		}
+
+		write(sock, JJ, strlen(JJ));
+	}
+
+		/* TCPセッションの終了*/
+		close(sock);
+
+}
+
+void stringtochar(string *Jinfo, char JJ[]) {
+	
+	
 }
 
 void jointout() {
