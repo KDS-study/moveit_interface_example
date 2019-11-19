@@ -17,9 +17,9 @@ using std::thread;
 
 #define PI 3.14159265
 
-void lower_upper(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
+void lower_upper(double *j1p, double *j2p, double *j3p, double *j4p, double *j5p, double *j6p);
 
-int cobotta_move(int argc, char** argv, int* j1p, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
+int cobotta_move(int argc, char** argv, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
 
 void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
 void TcpThread1(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
@@ -167,12 +167,12 @@ int main(int argc, char** argv)
 			break;
 
 		case 'h':
-			*j6 += speed;
+			*j6p += speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 			break;
 
 		case 'n':
-			*j6 -= speed;
+			*j6p -= speed;
 			cobotta_move(argc, argv, *j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 			break;
@@ -183,7 +183,7 @@ int main(int argc, char** argv)
 			*j3p = 1.5708;
 			*j4p = 0;
 			*j5p = 0;
-			*j6 = 0;
+			*j6p = 0;
 
 
 			speed = 0.1;
@@ -268,7 +268,7 @@ void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, d
 	std::cout << "J3:" << rad2deg(*j3p) << "deg" << std::endl;
 	std::cout << "J4:" << rad2deg(*j4p) << "deg" << std::endl;
 	std::cout << "J5:" << rad2deg(*j5p) << "deg" << std::endl;
-	std::cout << "J6:" << rad2deg(*j6) << "deg" << std::endl;
+	std::cout << "J6:" << rad2deg(*j6p) << "deg" << std::endl;
 }
 
 
@@ -334,15 +334,15 @@ void lower_upper(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p
 		ROS_INFO("J5 upper");
 	}
 
-	if (*j6 < -2.96706)
+	if (*j6p < -2.96706)
 	{
-		*j6 = -2.96706;
+		*j6p = -2.96706;
 		ROS_INFO("J6 lower");
 	}
 
-	if (*j6 > 2.96706)
+	if (*j6p > 2.96706)
 	{
-		*j6 = 2.96706;
+		*j6p = 2.96706;
 		ROS_INFO("J6 upper");
 	}
 
@@ -357,7 +357,7 @@ MoveItErrorCode moveByJointValues(MoveGroupInterface& moveGroup, const std::vect
 }
 
 int cobotta_move(int argc, char** argv, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
-	lower_upper();
+	lower_upper(*j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 	ros::init(argc, argv, "moveit_interface_example");
 	ros::NodeHandle node;
