@@ -196,8 +196,6 @@ int main(int argc, char** argv)
 		}
 		jointout();
 
-		*Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
-
 	}
 
 	ros::waitForShutdown();
@@ -242,9 +240,9 @@ void TcpThread1(string* Jinfo) {
 
 	while (true) {
 		Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
-		char JJ[*Jinfo.length()];
+		char JJ[Jinfo.length()];
 		for (i = 0; i < sizeof(JJ); i++) {
-			JJ[i] = *Jinfo[i];
+			JJ[i] = Jinfo[i];
 		}
 
 		write(sock, JJ, strlen(JJ));
