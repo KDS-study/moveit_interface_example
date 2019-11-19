@@ -17,12 +17,12 @@ using std::thread;
 
 #define PI 3.14159265
 
-void lower_upper(double *j1p, double *j2p, double *j3p, double *j4p, double *j5p, double *j6p);
+void lower_upper(double j1p, double j2p, double j3p, double j4p, double j5p, double j6p);
 
-int cobotta_move(int argc, char** argv, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
+int cobotta_move(int argc, char** argv, double j1p, double j2p, double j3p, double j4p, double j5p, double j6p);
 
-void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
-void TcpThread1(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p);
+void jointout(double j1p, double j2p, double j3p, double j4p, double j5p, double j6p);
+void TcpThread1(double j1p, double j2p, double j3p, double j4p, double j5p, double j6p);
 
 static struct termios old, current;
 
@@ -215,7 +215,7 @@ int main(int argc, char** argv)
 
 }
 
-void TcpThread1(double *j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p ) {
+void TcpThread1(double j1p, double j2p, double j3p, double j4p, double j5p, double j6p) {
 	struct sockaddr_in addr;
 	struct sockaddr_in client;
 
@@ -269,7 +269,7 @@ void stringtochar(string *Jinfo, char JJ[]) {
 	
 }
 
-void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
+void jointout(double j1p, double j2p, double j3p, double j4p, double j5p, double j6p) {
 	std::cout << "J1:" << rad2deg(*j1p) << "deg" << std::endl;
 	std::cout << "J2:" << rad2deg(*j2p) << "deg" << std::endl;
 	std::cout << "J3:" << rad2deg(*j3p) << "deg" << std::endl;
@@ -280,7 +280,7 @@ void jointout(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, d
 
 
 
-void lower_upper(double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
+void lower_upper(double j1p, double j2p, double j3p, double j4p, double j5p, double j6p) {
 	if (*j1p < -2.617994)
 	{
 		*j1p = -2.617994;
@@ -363,7 +363,7 @@ MoveItErrorCode moveByJointValues(MoveGroupInterface& moveGroup, const std::vect
 	return moveGroup.move();
 }
 
-int cobotta_move(int argc, char** argv, double* j1p, double* j2p, double* j3p, double* j4p, double* j5p, double* j6p) {
+int cobotta_move(int argc, char** argv, double j1p, double j2p, double j3p, double j4p, double j5p, double j6p) {
 	lower_upper(*j1p, *j2p, *j3p, *j4p, *j5p, *j6p);
 
 	ros::init(argc, argv, "moveit_interface_example");
