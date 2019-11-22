@@ -25,6 +25,8 @@ double J5 = -1.658063;
 double J6 = -2.96706;
 double speed = 0.0872665;
 
+bool moveD = false;
+
 void lower_upper();
 
 int cobotta_move(int argc, char** argv);
@@ -91,15 +93,16 @@ void error(char* msg)
 
 int main(int argc, char** argv)
 {
-	char* key;
+
+	char key;
 
 	thread th1(TcpThread1);
 
 	while (true)
 	{
-		*key = getche();
+		key = getche();
 
-		switch (*key) {
+		switch (key) {
 		case '1':
 			speed *= 0.1;
 			ROS_INFO("Speed * 0.2");
@@ -116,64 +119,70 @@ int main(int argc, char** argv)
 		case 'a':
 			J1 += speed;
 			cobotta_move(argc, argv);
+			moveD = true;
 			break;
+			
 		case 'z':
 			J1 -= speed;
 			cobotta_move(argc, argv);
+			moveD = true;
 			break;
+			
 
 		case 's':
 			J2 += speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 		case 'x':
 			J2 -= speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 
 		case 'd':
 			J3 += speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 		case 'c':
 			J3 -= speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 
 		case 'f':
 			J4 += speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 		case 'v':
 			J4 -= speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 
 		case 'g':
 			J5 += speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 		case 'b':
 			J5 -= speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 
 		case 'h':
 			J6 += speed;
 			cobotta_move(argc, argv);
+			moveD = true;
 			break;
+
 		case 'n':
 			J6 -= speed;
 			cobotta_move(argc, argv);
-
+			moveD = true;
 			break;
 
 		case 'q':
@@ -185,6 +194,7 @@ int main(int argc, char** argv)
 			J6 = 0;
 			speed = 0.1;
 			cobotta_move(argc, argv);
+			moveD = true;
 			break;
 
 		case '0':
@@ -239,13 +249,19 @@ void TcpThread1() {
 	sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
 
 	while (true) {
-		Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
-		char JJ[Jinfo.length()];
-		for (i = 0; i < sizeof(JJ); i++) {
-			JJ[i] = Jinfo[i];
+
+		if (moveD = true) {
+			Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
+			char JJ[Jinfo.length()];
+			for (i = 0; i < sizeof(JJ); i++) {
+				JJ[i] = Jinfo[i];
+			}
+			write(sock, JJ, strlen(JJ));
+			moveD = false;
 		}
 
-		write(sock, JJ, strlen(JJ));
+		
+		
 	}
 
 	/* TCPセッションの終了*/
