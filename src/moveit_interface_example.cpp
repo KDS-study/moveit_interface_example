@@ -251,7 +251,7 @@ void TcpThread1() {
 	while (true) {
 
 		if (moveD = true) {
-			Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
+			Jinfo = "J" + to_string(rad2deg(J1)) + "J" + to_string(rad2deg(J2)) + "J" + to_string(rad2deg(J3)) + "J" + to_string(rad2deg(J4)) + "J" + to_string(rad2deg(J5)) + "J" + to_string(rad2deg(J6));
 			char JJ[Jinfo.length()];
 			for (i = 0; i < sizeof(JJ); i++) {
 				JJ[i] = Jinfo[i];
