@@ -24,7 +24,8 @@ double J5 = -1.658063;
 double J6 = -2.96706;
 double speed = 0.0872665;
 
-bool moveD = ture;
+bool moveD = true;
+bool exiT = true;
 
 int cobotta_move(int argc, char** argv);
 
@@ -95,7 +96,7 @@ int main(int argc, char** argv)
 
 	thread th1(TcpThread1);
 
-	while (true)
+	while (exit = true)
 	{
 		key = getche();
 
@@ -199,6 +200,7 @@ int main(int argc, char** argv)
 			break;
 
 		case '0':
+			exiT = false;
 			break;
 
 		default:
@@ -256,7 +258,7 @@ void TcpThread1() {
 	len = sizeof(client);
 	sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
 
-	while (true) {
+	while (exiT=true) {
 
 		if (moveD = true) {
 			/*jj1 = rad2deg(J1);
@@ -274,6 +276,7 @@ void TcpThread1() {
 			write(sock, JJ, strlen(JJ));
 			moveD = false;
 		}
+	
 		
 	}
 
