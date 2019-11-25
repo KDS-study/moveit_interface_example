@@ -4,7 +4,6 @@
 #include <termios.h>
 #include <string.h>
 
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -25,17 +24,15 @@ double J5 = -1.658063;
 double J6 = -2.96706;
 double speed = 0.0872665;
 
-bool moveD = false;
-
-void lower_upper();
+bool moveD = ture;
 
 int cobotta_move(int argc, char** argv);
 
+void lower_upper();
 void jointout();
 void TcpThread1();
 
 static struct termios old, current;
-
 
 /* Initialize new terminal i/o settings */
 void initTermios(int echo)
@@ -107,10 +104,12 @@ int main(int argc, char** argv)
 			speed *= 0.1;
 			ROS_INFO("Speed * 0.2");
 			break;
+
 		case '2':
 			speed = 0.1;
 			ROS_INFO("Speed initialized");
 			break;
+
 		case '3':
 			speed *= 10;
 			ROS_INFO("Speed * 5");
@@ -134,6 +133,7 @@ int main(int argc, char** argv)
 			cobotta_move(argc, argv);
 			moveD = true;
 			break;
+
 		case 'x':
 			J2 -= speed;
 			cobotta_move(argc, argv);
@@ -145,6 +145,7 @@ int main(int argc, char** argv)
 			cobotta_move(argc, argv);
 			moveD = true;
 			break;
+
 		case 'c':
 			J3 -= speed;
 			cobotta_move(argc, argv);
@@ -273,8 +274,6 @@ void TcpThread1() {
 			write(sock, JJ, strlen(JJ));
 			moveD = false;
 		}
-
-		
 		
 	}
 
