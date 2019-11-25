@@ -219,13 +219,13 @@ void TcpThread1() {
 	struct sockaddr_in client;
 	int len;
 	int sock;
-
-	double jj1;
+	/*double jj1;
 	double jj2;
 	double jj3;
 	double jj4;
 	double jj5;
-	double jj6;
+	double jj6;*/
+	
 
 	int i;
 
@@ -258,14 +258,14 @@ void TcpThread1() {
 	while (true) {
 
 		if (moveD = true) {
-
-			jj1 = rad2deg(J1);
+			/*jj1 = rad2deg(J1);
 			jj2 = rad2deg(J2);
 			jj3 = rad2deg(J3);
 			jj4 = rad2deg(J4);
 			jj5 = rad2deg(J5);
 			jj6 = rad2deg(J6);
-			Jinfo = "J" + to_string(jj1) + "J" + to_string(jj2) + "J" + to_string(jj3) + "J" + to_string(jj4) + "J" + to_string(jj5) + "J" + to_string(jj6);
+			Jinfo = "J" + to_string(jj1) + "J" + to_string(jj2) + "J" + to_string(jj3) + "J" + to_string(jj4) + "J" + to_string(jj5) + "J" + to_string(jj6);*/
+			Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
 			char JJ[Jinfo.length()];
 			for (i = 0; i < sizeof(JJ); i++) {
 				JJ[i] = Jinfo[i];
