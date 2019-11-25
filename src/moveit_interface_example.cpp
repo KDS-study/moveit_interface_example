@@ -96,7 +96,7 @@ int main(int argc, char** argv)
 
 	thread th1(TcpThread1);
 
-	while (exit)
+	while (exiT)
 	{
 		key = getche();
 
@@ -199,20 +199,20 @@ int main(int argc, char** argv)
 			moveD = true;
 			break;
 
-		case '0':
+		case 'p':
 			exiT = false;
 			break;
 
 		default:
-			ROS_INFO("Push 1,2,3 azsxdcfvgbhn");
+			ROS_INFO("Push 1,2,3 azsxdcfvgbhn,p");
 			continue;
 		}
 		jointout();
 
 	}
 
-	ros::waitForShutdown();
 	th1.join();
+	ros::waitForShutdown();
 	return 0;
 
 }
