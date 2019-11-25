@@ -96,7 +96,7 @@ int main(int argc, char** argv)
 
 	thread th1(TcpThread1);
 
-	while (exit == true)
+	while (exit)
 	{
 		key = getche();
 
@@ -258,7 +258,7 @@ void TcpThread1() {
 	len = sizeof(client);
 	sock = accept(sock, (struct sockaddr*) & client, (socklen_t*)& len);
 
-	while (exiT==true) {
+	while (exiT) {
 
 		if (moveD == true) {
 			/*jj1 = rad2deg(J1);
