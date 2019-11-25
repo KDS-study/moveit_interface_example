@@ -265,7 +265,7 @@ void TcpThread1() {
 			jj4 = rad2deg(J4);
 			jj5 = rad2deg(J5);
 			jj6 = rad2deg(J6);
-			Jinfo = "J" + to-string(jj1) + "J" + to-string(jj2) + "J" + to-string(jj3) + "J" + to-string(jj4) + "J" + to-string(jj5) + "J" + to-string(jj6);
+			Jinfo = "J" + to_string(jj1) + "J" + to_string(jj2) + "J" + to_string(jj3) + "J" + to_string(jj4) + "J" + to_string(jj5) + "J" + to_string(jj6);
 			char JJ[Jinfo.length()];
 			for (i = 0; i < sizeof(JJ); i++) {
 				JJ[i] = Jinfo[i];
