@@ -220,21 +220,21 @@ int main(int argc, char** argv)
 void TcpThread1() {
 	struct sockaddr_in addr;
 	struct sockaddr_in client;
+
 	int len;
 	int sock;
-	/*double jj1;
-	double jj2;
-	double jj3;
-	double jj4;
-	double jj5;
-	double jj6;*/
-	
-
 	int i;
 
+	string jj1;
+	string jj2;
+	string jj3;
+	string jj4;
+	string jj5;
+	string jj6;
+	
 	string Jinfo;
 
-	
+
 	/* ソケットの作成 */
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -251,7 +251,7 @@ void TcpThread1() {
 	bind(sock, (struct sockaddr*) & addr, sizeof(addr));
 
 	/* TCPクライアントからの接続要求を待てる状態にする */
-	listen(sock, 5);
+	listen(sock, 1);
 
 
 	/* TCPクライアントからの接続要求を受け付ける */
@@ -261,14 +261,50 @@ void TcpThread1() {
 	while (exiT) {
 
 		if (moveD == true) {
-			/*jj1 = rad2deg(J1);
-			jj2 = rad2deg(J2);
-			jj3 = rad2deg(J3);
-			jj4 = rad2deg(J4);
-			jj5 = rad2deg(J5);
-			jj6 = rad2deg(J6);
-			Jinfo = "J" + to_string(jj1) + "J" + to_string(jj2) + "J" + to_string(jj3) + "J" + to_string(jj4) + "J" + to_string(jj5) + "J" + to_string(jj6);*/
-			Jinfo = "J" + to_string(J1) + "J" + to_string(J2) + "J" + to_string(J3) + "J" + to_string(J4) + "J" + to_string(J5) + "J" + to_string(J6);
+
+			if (J1 < 0) {
+				jj1 =  to_string(J1);
+			}
+			else {
+				jj1 = "+" + to_stiring(J1);
+			}
+
+			if (J2 < 0) {
+				jj2 = to_string(J2);
+			}
+			else {
+				jj2 = "+" + to_stiring(J2);
+			}
+
+			if (J3 < 0) {
+				jj3 = to_string(J3);
+			}
+			else {
+				jj3 = "+" + to_stiring(J3);
+			}
+
+			if (J4 < 0) {
+				jj4 = to_string(J4);
+			}
+			else {
+				jj4 = "+" + to_stiring(J4);
+			}
+
+			if (J5 < 0) {
+				jj5 = to_string(J5);
+			}
+			else {
+				jj5 = "+" + to_stiring(J5);
+			}
+
+			if (J6 < 0) {
+				jj6 = to_string(J6);
+			}
+			else {
+				jj6 = "+" + to_stiring(J6);
+			}
+			
+			Jinfo = "J" + jj1 + "J" + jj2 + "J" + jj3 + "J" + jj4 + "J" + jj5 + "J" + jj6;
 			char JJ[Jinfo.length()];
 			for (i = 0; i < sizeof(JJ); i++) {
 				JJ[i] = Jinfo[i];
