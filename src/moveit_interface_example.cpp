@@ -266,42 +266,42 @@ void TcpThread1() {
 				jj1 =  to_string(J1);
 			}
 			else {
-				jj1 = "+" + to_stiring(J1);
+				jj1 = "+" + to_string(J1);
 			}
 
 			if (J2 < 0) {
 				jj2 = to_string(J2);
 			}
 			else {
-				jj2 = "+" + to_stiring(J2);
+				jj2 = "+" + to_string(J2);
 			}
 
 			if (J3 < 0) {
 				jj3 = to_string(J3);
 			}
 			else {
-				jj3 = "+" + to_stiring(J3);
+				jj3 = "+" + to_string(J3);
 			}
 
 			if (J4 < 0) {
 				jj4 = to_string(J4);
 			}
 			else {
-				jj4 = "+" + to_stiring(J4);
+				jj4 = "+" + to_string(J4);
 			}
 
 			if (J5 < 0) {
 				jj5 = to_string(J5);
 			}
 			else {
-				jj5 = "+" + to_stiring(J5);
+				jj5 = "+" + to_string(J5);
 			}
 
 			if (J6 < 0) {
 				jj6 = to_string(J6);
 			}
 			else {
-				jj6 = "+" + to_stiring(J6);
+				jj6 = "+" + to_string(J6);
 			}
 			
 			Jinfo = "J" + jj1 + "J" + jj2 + "J" + jj3 + "J" + jj4 + "J" + jj5 + "J" + jj6;
