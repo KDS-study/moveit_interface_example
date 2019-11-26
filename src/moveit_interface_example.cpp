@@ -304,7 +304,7 @@ void TcpThread1() {
 				jj6 = "+" + to_string(J6);
 			}
 			
-			Jinfo = "J" + jj1 + "J" + jj2 + "J" + jj3 + "J" + jj4 + "J" + jj5 + "J" + jj6;
+			Jinfo = jj1 + "J" + jj2 + "J" + jj3 + "J" + jj4 + "J" + jj5 + "J" + jj6;
 			char JJ[Jinfo.length()];
 			for (i = 0; i < sizeof(JJ); i++) {
 				JJ[i] = Jinfo[i];
