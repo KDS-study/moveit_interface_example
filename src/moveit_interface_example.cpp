@@ -16,12 +16,12 @@ using std::thread;
 
 #define PI 3.14159265
 
-double J1 = -2.617994;
-double J2 = -1.047198;
+double J1 = 0;
+double J2 = 0;
 double J3 = 1.5708;
-double J4 = -2.96706;
-double J5 = -1.658063;
-double J6 = -2.96706;
+double J4 = 0;
+double J5 = 0;
+double J6 = 0;
 double speed = 0.0872665;
 
 bool moveD = true;
